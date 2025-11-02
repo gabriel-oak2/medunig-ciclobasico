@@ -24,7 +24,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #128f4c 0%, #0d7338 100%);
+            background: url('https://i.ibb.co/fdC4bPK0/fundo-med.png') no-repeat center center;
+            background-size: cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -33,16 +34,35 @@
             transition: opacity 0.5s ease;
         }
         
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(23, 27, 22, 0.85);
+            backdrop-filter: blur(5px);
+        }
+        
+        .loading-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
         .loading-screen.hidden {
             opacity: 0;
             pointer-events: none;
         }
         
         .logo {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: auto;
             margin-bottom: 30px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
         
         .spinner {
@@ -52,22 +72,28 @@
             border-top: 4px solid #ffffff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .loading-text {
             color: white;
-            font-size: 18px;
-            font-weight: 500;
+            font-size: 20px;
+            font-weight: 600;
             text-align: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 8px;
         }
         
         .loading-subtext {
-            color: rgba(255,255,255,0.8);
-            font-size: 14px;
-            margin-top: 10px;
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
             text-align: center;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .unig-text {
+            color: #128f4c;
+            font-weight: 700;
         }
         
         @keyframes spin {
@@ -95,15 +121,15 @@
 <body>
     <!-- Tela de Loading -->
     <div class="loading-screen" id="loadingScreen">
-        <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="white"/>
-            <path d="M35 40L45 50L35 60" stroke="#128f4c" stroke-width="4" stroke-linecap="round"/>
-            <path d="M55 40L65 50L55 60" stroke="#128f4c" stroke-width="4" stroke-linecap="round"/>
-            <circle cx="50" cy="50" r="30" stroke="#128f4c" stroke-width="2" fill="none"/>
-        </svg>
-        <div class="spinner"></div>
-        <div class="loading-text">Carregando Avaliação</div>
-        <div class="loading-subtext">Medicina - Ciclo Básico</div>
+        <div class="loading-overlay"></div>
+        <div class="loading-content">
+            <img src="https://institucional.unig.br/wp-content/uploads/logo-branca-da-unig.webp" 
+                 alt="UNIG" 
+                 class="logo">
+            <div class="spinner"></div>
+            <div class="loading-text">AVALIAÇÃO DO CICLO BÁSICO</div>
+            <div class="loading-subtext">Medicina • <span class="unig-text">UNIG</span></div>
+        </div>
     </div>
 
     <!-- Iframe principal -->
@@ -125,10 +151,10 @@
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
                 iframe.classList.add('loaded');
-            }, 1000); // Pequeno delay para smooth transition
+            }, 1500); // Delay um pouco maior para apreciar o loading
         }
         
-        // Fallback: se depois de 10 segundos não carregar, esconde loading mesmo assim
+        // Fallback: se depois de 15 segundos não carregar, esconde loading mesmo assim
         setTimeout(() => {
             const loadingScreen = document.getElementById('loadingScreen');
             const iframe = document.getElementById('mainFrame');
@@ -137,7 +163,7 @@
                 loadingScreen.classList.add('hidden');
                 iframe.classList.add('loaded');
             }
-        }, 10000);
+        }, 15000);
     </script>
 </body>
 </html>
